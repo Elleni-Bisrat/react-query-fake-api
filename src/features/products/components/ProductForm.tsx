@@ -1,53 +1,39 @@
-import { useForm } from "react-hook-form";
-import { useCreateProduct } from "../hooks/useCreateProduct";
-// import { useNavigate } from "react-router-dom";
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import  { productSchema } from '../schemas/product.schema';
+import  type { ProductFormData } from '../schemas/product.schema';
 
-type ProductFormData = {
-  name: string;
-  category: string;
-  price: number;
-};
+interface ProductFormProps {
+  defaultValues?: Partial<ProductFormData>;
+  onSubmit: (data: ProductFormData) => void;
+  isLoading?: boolean;
+}
 
-export function ProductForm() {
-  const { mutate } = useCreateProduct();
-// const navigate = useNavigate();
-  const { register, handleSubmit } =
-    useForm<ProductFormData>();
-
-  const onSubmit = (data: ProductFormData) => {
-    mutate(data);
-  };
-  // const onSubmit = (data: ProductFormData) => {
-  //   mutate(data,{
-  //     onSuccess:()=>{
-  //       navigate("/products");
-  //     }
-  //   });
-  // };
+export const ProductForm = ({ defaultValues, onSubmit, isLoading }: ProductFormProps) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<ProductFormData>({
+    resolver: zodResolver(productSchema),
+    defaultValues,
+  });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <input
-        {...register("name")}
-        placeholder="Name"
-      />
-
-      <input
-        {...register("category")}
-        placeholder="Category"
-      />
-
-      <input
-        type="number"
-        {...register("price", {
-          valueAsNumber: true,
-        })}
-        placeholder="Price"
-      />
-
-      <button type="submit">
-        Create Product
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <label className="block">Name</label>
+        <input {...register('name')} className="border p-2 w-full" />
+        {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+      </div>
+      <div>
+        <label className="block">Price</label>
+        <input {...register('price', { valueAsNumber: true })} type="number" className="border p-2 w-full" />
+        {errors.price && <p className="text-red-500">{errors.price.message}</p>}
+      </div>
+      <div>
+        <label className="block">Description</label>
+        <textarea {...register('description')} className="border p-2 w-full" />
+      </div>
+      <button type="submit" disabled={isLoading} className="bg-blue-500 text-white p-2 rounded">
+        {isLoading ? 'Saving...' : 'Save'}
       </button>
     </form>
   );
-}
+};

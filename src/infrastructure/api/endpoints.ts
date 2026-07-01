@@ -1,5 +1,9 @@
 export const ENDPOINTS = {
-    PRODUCTS:"/products",
-    USERS:"/users",
-    CARTS:"carts",
-}
+  AUTH: {
+    LOGIN: '/auth/login',
+    LOGOUT: '/auth/logout',
+    ME: '/auth/me',
+  },
+  PRODUCTS: '/products',
+  ORDERS: '/orders',
+};

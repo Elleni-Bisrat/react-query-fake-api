@@ -1,8 +1,12 @@
 import { productService } from "../api/productService";
 import { useMutation } from "@tanstack/react-query";
-
-export const useDeleteProduct = ()=>{
-    return useMutation({
-        mutationFn:productService.deleteProduct
-    });
-}
+import {useQueryClient } from '@tanstack/react-query';
+export const useDeleteProduct = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: productService.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+    },
+  });
+};

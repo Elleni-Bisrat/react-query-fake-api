@@ -1,25 +1,17 @@
 {
   "products": [
     {
-      "id": 1,
-      "name": "MacBook Pro",
-      "price": 2500,
-      "category": "Laptop",
-      "image": "https://picsum.photos/300?1"
+      "name": "phone",
+      "price": 100,
+      "description": "sart phone",
+      "id": "4PGpzU1-X9A"
     },
     {
-      "id": 1,
-      "name": "iHone 15",
-      "price": 1200,
-      "category": "phone",
-      "image": "https://picsum.photos/300?2"
-    },
-    {
-      "id": 3,
-      "name": "Galaxy s25",
-      "price": 1110,
-      "category": "phone",
-      "image": "https://picsum.photos/300?3"
+      "name": "laptop",
+      "price": 200,
+      "description": "touch screen laptop",
+      "id": "SmTaT9ZvNa8"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
